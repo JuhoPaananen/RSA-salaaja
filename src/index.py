@@ -5,9 +5,8 @@ def main():
     """Main method.
     """
     keygen = KeyGenerator()
-    primes = keygen.eratosthene_sieve(1000)
-    print(primes)
+    prime = keygen.generate_prime()
+    print(prime)
 
 if __name__ == "__main__":
     main()
-
