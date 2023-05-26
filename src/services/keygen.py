@@ -1,35 +1,31 @@
-KEY_LENGTH = 2**1024
+import random
+#from utils import eratosthene_sieve, miller_rabin_test
+from utils import eratosthene_sieve, miller_rabin_test
+
+KEY_LENGTH = 1024 # bits
+NUMBER_OF_TRIALS = 40
+# Handbook of Applied Cryptography (chapter 4) states that 3 trials is sufficient for
+# 1024 bit numbers. However, many discussions online recommend 40 trials for probability
+# of 2^-80 for a non-prime to pass the test
 
 class KeyGenerator:
-    """Class that handles the generation of keys for the RSA algorithm.
+    """
+    Class that handles the generation of keys for the RSA algorithm.
     """
 
     def __init__(self):
-        """Constructor method.
-        """
         self.key_length = KEY_LENGTH
+        self.filter_primes = eratosthene_sieve(1000)
 
-    def eratosthene_sieve(self, n: int) -> list:
-        """Method that generates a list of prime numbers using the Sieve of Eratosthene. This will be used to speed up the Rab-Miller test.
-
-        Args:
-            n (int): The number up to which the list of primes will be generated.
+    def generate_prime(self) -> int:
+        """
+        Method that generates a prime number of length KEY_LENGTH bits.
 
         Returns:
-            list: A list of primes up to n.
+            int: Returns a likely prime number of length KEY_LENGTH bits.
         """
-        primes = [True] * (n + 1)
-        primes[0] = False 
-        primes[1] = False
-        for i in range(int(n**0.5) + 1):
-            if primes[i]:
-                for j in range(i * i, n + 1, i):
-                    primes[j] = False
-        return [i for i in range(n) if primes[i]]
-
-    def miller_rabin_test(self, n:int, k:int) -> bool:
-        return False
-
-
-primes = KeyGenerator().eratosthene_sieve(1000)
-print(primes)
+        while True:
+            candidate = random.randrange(2**(self.key_length-1) + 1, 2**(self.key_length)-1)
+            if all(candidate % prime != 0 for prime in self.filter_primes):
+                if miller_rabin_test(candidate, NUMBER_OF_TRIALS):
+                    return candidate
