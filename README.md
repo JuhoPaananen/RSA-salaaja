@@ -9,3 +9,6 @@ Tira-Labra projektityönä toteutettu RSA-salaaja, jolla voidaan luoda avainpare
 ### Määrittelydokumentti
 [Määrittelydokumentti](https://github.com/JuhoPaananen/RSA-salaaja/blob/main/documentation/määrittelydokumentti.md)
 
+### Testaus
+[Tuorein testikattavuusraportti](https://juhopaananen.github.io/)
+
