@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import Mock, patch
 from services.keygen import KeyGenerator
 from utils import eratosthene_sieve
 
