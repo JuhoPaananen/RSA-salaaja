@@ -5,8 +5,9 @@ def main():
     """Main method.
     """
     keygen = KeyGenerator()
-    prime = keygen.generate_prime()
-    print(prime)
+    keys = keygen.generate_keys()
+    public_key = keys[0][1]
+    print(public_key)
 
 if __name__ == "__main__":
     main()
