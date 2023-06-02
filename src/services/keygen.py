@@ -36,8 +36,8 @@ class KeyGenerator:
         # Choose d so that d*e = 1 mod phi --> d = e^-1 mod phi
         d = pow(e, -1, phi)
         
-        public_key = (N, e)
-        private_key = (N, d)
+        public_key = (e, N)
+        private_key = (d, N)
         del p, q, N, phi, e, d
         
         return public_key, private_key
