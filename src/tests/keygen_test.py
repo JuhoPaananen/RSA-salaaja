@@ -1,12 +1,11 @@
 import unittest
 from unittest.mock import Mock, patch
-from services.keygen import KeyGenerator
+from services.keygen import generate_keys
 from utils import eratosthene_sieve
 
 class TestKeyGenerator(unittest.TestCase):
     def setUp(self) -> None:
-        self.keygen = KeyGenerator()
-        self.public_key, self.private_key = self.keygen.generate_keys()
+        self.public_key, self.private_key = generate_keys()
 
     def test_key_values(self):
         self.assertTrue(self.public_key[1] == self.private_key[1])
