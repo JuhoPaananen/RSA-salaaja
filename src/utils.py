@@ -1,7 +1,7 @@
 import random
 
 
-def eratosthene_sieve(max_number: int) -> list:
+def _eratosthene_sieve(max_number: int) -> list:
     """
     Method that generates a list of prime numbers using the Sieve of Eratosthene.
     This will be used to speed up the Rab-Miller test.
@@ -21,7 +21,7 @@ def eratosthene_sieve(max_number: int) -> list:
                 primes[j] = False
     return [i for i in range(max_number) if primes[i]]
 
-def miller_rabin_test(candidate:int, trials:int = 40) -> bool:
+def _miller_rabin_test(candidate:int, trials:int = 40) -> bool:
     """
     Method that checks if a candidate odd number is prime using the Miller-Rabin test.
     This implementation is based on the pseudocode from the Wikipedia article:
@@ -56,7 +56,7 @@ def miller_rabin_test(candidate:int, trials:int = 40) -> bool:
 
     return True
 
-def euclidean_algorithm(first_number: int, second_number: int) -> int:
+def _euclidean_algorithm(first_number: int, second_number: int) -> int:
     """
     Method that returns the greatest common divisor of two numbers.
 
@@ -85,11 +85,11 @@ def generate_prime(bits: int = 1024) -> int:
     Returns:
         int: Returns a likely prime number of length n bits.
     """
-    filter_primes = eratosthene_sieve(1000)
+    filter_primes = _eratosthene_sieve(1000)
     while True:
         candidate = random.randrange(2**(bits-1) + 1, 2**bits-1)
         if all(candidate % prime != 0 for prime in filter_primes):
-            if miller_rabin_test(candidate):
+            if _miller_rabin_test(candidate):
                 return candidate
 
 def find_e(modulus: int, phi: int) -> int:
@@ -105,5 +105,5 @@ def find_e(modulus: int, phi: int) -> int:
     """
     while True:
         candidate_e = random.randrange(2, modulus)
-        if euclidean_algorithm(candidate_e, phi) == 1:
+        if _euclidean_algorithm(candidate_e, phi) == 1:
             return candidate_e
