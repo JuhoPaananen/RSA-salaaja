@@ -5,9 +5,9 @@ Ohjelman [Käyttöohje](https://github.com/JuhoPaananen/RSA-salaaja/blob/main/do
 
 ## Dokumentaatio
 ### Viikkoraportit
-[Viikko 4](https://github.com/JuhoPaananen/RSA-salaaja/blob/main/documentation/Viikkoraportti4.md)
+[Viikko 4](https://github.com/JuhoPaananen/RSA-salaaja/blob/main/documentation/viikkoraportti4.md)
 
-[Viikko 3](https://github.com/JuhoPaananen/RSA-salaaja/blob/main/documentation/Viikkoraportti3.md)
+[Viikko 3](https://github.com/JuhoPaananen/RSA-salaaja/blob/main/documentation/viikkoraportti3.md)
 
 [Viikko 2](https://github.com/JuhoPaananen/RSA-salaaja/blob/main/documentation/Viikkoraportti2.md)
 
