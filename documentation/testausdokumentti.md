@@ -8,7 +8,9 @@ Utils-moduulin sisältämiä algoritmeja testataan ´TestPrimeNumberTools´-luok
 
 Salauksesta vastaava rsa-moduuli testataan 'TestCipher' luokalla. Näissä testeissä pääroolissa on RSA:n mukainen salaus ja salauksen purku moduuliaritmetiikan keinoin.
 
+Käyttöliittymää gui.py ei testata automaattisilla testeillä.
+
 ## Testauskattavuus
 Testien haaraumakattavuus on hyvä 98%. Puutteita syntyy keygen moduulin generate_keys() funktion while loopin vajaasta testauksesta.
 
-![image](https://github.com/JuhoPaananen/JuhoPaananen.github.io/blob/main/testikattavuus.png)
+![image](https://github.com/JuhoPaananen/JuhoPaananen.github.io/blob/main/rsaprojekti/pictures/testikattavuus.png)
