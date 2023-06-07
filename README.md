@@ -22,5 +22,5 @@ Toteutusdokumentin ensimmäinen versio luettavissa [täältä](https://github.co
 ### Testaus
 Testausdokumentin voi lukea [tästä](https://github.com/JuhoPaananen/RSA-salaaja/blob/main/documentation/testausdokumentti.md)
 
-[Tuorein testikattavuusraportti](https://github.com/JuhoPaananen/JuhoPaananen.github.io/blob/main/rsaprojekti/coverage/index.html)
+[Tuorein testikattavuusraportti](https://github.com/JuhoPaananen/JuhoPaananen.github.io/blob/main/rsaprojekti/coverage)
 
