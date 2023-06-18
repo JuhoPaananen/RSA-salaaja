@@ -3,11 +3,13 @@ import time
 from services.keygen import generate_keys
 from services.rsa import encrypt, decrypt
 
+MAX_MESSAGE_LENGTH = 256 #2048 bits / 8 bits = 256 bytes
+
 class RsaApplication:
+
     def __init__(self):
-        self.public_key = None
-        self.private_key = None
-        self.keygen_time = None
+        self.max_message_length = MAX_MESSAGE_LENGTH
+        self.public_key = self.private_key = None
 
         self._initialize_window()
         self._create_widgets()
@@ -66,12 +68,17 @@ class RsaApplication:
         # Message and encrypted message entries
         self.message_entry = tk.Text(self.window, height=10, width=60, wrap='word')
         self.message_entry.grid(row=6, column=0, padx=5, pady=5, sticky="nsew")
+        self.message_entry.bind('<<Modified>>', self._check_message_length)
         self.encrypted_message_entry = tk.Text(self.window, height=10, width=60, wrap='word')
         self.encrypted_message_entry.grid(row=6, column=1, padx=5, pady=5, sticky="nsew")
 
+        # message length calculation
+        self.message_length_label = tk.Label(self.window, text='Viestin pituus:', font='bold')
+        self.message_length_label.grid(row=7, column=0, padx=5, pady=5, sticky="we")
+
         # copy, paste, encrypt and decrypt buttons with frames
         self.message_frame = tk.Frame(self.window)
-        self.message_frame.grid(row=7, column=0, padx=5, pady=5, sticky="we")
+        self.message_frame.grid(row=8, column=0, padx=5, pady=5, sticky="we")
         self.copy_msg_button = tk.Button(self.message_frame, text='Kopioi', command=lambda: self._copy(self.message_entry))
         self.copy_msg_button.pack(side=tk.LEFT, expand=True, fill=tk.X)
         self.paste_msg_button = tk.Button(self.message_frame, text='Liitä', command=lambda: self._paste(self.message_entry))
@@ -80,18 +87,20 @@ class RsaApplication:
         self.encrypt_button.pack(side=tk.LEFT, expand=True, fill=tk.X)
 
         self.encrypt_frame = tk.Frame(self.window)
-        self.encrypt_frame.grid(row=7, column=1, padx=5, pady=5, sticky="we")
+        self.encrypt_frame.grid(row=8, column=1, padx=5, pady=5, sticky="we")
         self.copy_encrypted_msg_button = tk.Button(self.encrypt_frame, text='Kopioi', command=lambda: self._copy(self.encrypted_message_entry))
         self.copy_encrypted_msg_button.pack(side=tk.LEFT, expand=True, fill=tk.X)
         self.paste_encrypted_msg_button = tk.Button(self.encrypt_frame, text='Liitä', command=lambda: self._paste(self.encrypted_message_entry))
         self.paste_encrypted_msg_button.pack(side=tk.LEFT, expand=True, fill=tk.X)
         self.decrypt_button = tk.Button(self.encrypt_frame, text='Pura', command=self._decrypt_message, font='bold', bg='navy', fg='white')
         self.decrypt_button.pack(side=tk.LEFT, expand=True, fill=tk.X)
-        
+
     def start(self):    
         self.window.mainloop()
 
     def _create_keys(self):
+        """Creates new public and private keys using keygen.py module's generate_keys() function and inserts them into the corresponding entry fields.
+        """
         self.public_key_entry.delete('1.0', 'end')
         self.private_key_entry.delete('1.0', 'end')
         start_time = time.time()
@@ -102,6 +111,10 @@ class RsaApplication:
         self.keygen_time_label['text'] = f'Avainten generointi kesti: {self.keygen_time:.3} sekuntia'
 
     def _encrypt_message(self):
+        """
+        Encrypts the message in the message entry field using the public key in the public key entry field and encrypt function from rsa.py module
+        and inserts the encrypted message into the encrypted message entry field.
+        """
         if self.public_key == None:
             self.public_key = self.public_key_entry.get('1.0', 'end').strip()
         message = self.message_entry.get('1.0', 'end').strip()
@@ -110,6 +123,9 @@ class RsaApplication:
         self.encrypted_message_entry.insert('1.0', encrypted_message)
 
     def _decrypt_message(self):
+        """
+        Decrypts the message in the encrypted message entry field using the private key in the private key entry field and decrypt function from rsa.py module
+        """
         if self.private_key == None:
             self.private_key = self.private_key_entry.get('1.0', 'end').strip()
         encrypted_message = self.encrypted_message_entry.get('1.0', 'end').strip()
@@ -118,9 +134,37 @@ class RsaApplication:
         self.message_entry.insert('1.0', decrypted_message)
 
     def _copy(self, entry):
+        """
+        Copies the text from the entry field to the clipboard.
+
+        Args:
+            entry (entry field): Entry field to copy the text from.
+        """
         self.window.clipboard_clear()
         self.window.clipboard_append(entry.get('1.0', 'end').strip())
 
     def _paste(self, entry):
+        """Pastes the text from the clipboard to the entry field."""
         entry.delete('1.0', 'end')
         entry.insert('1.0', self.window.clipboard_get())
+
+    def _check_message_length(self, *args):
+        """
+        Checks the length of the message in the message entry field and changes the color of the message length label
+        to red if the message is too long. Also prevents the user from typing more characters than the maximum message length is in bytes
+        limited by the length of RSA-keys. The code idea is from:
+        https://stackoverflow.com/questions/34493640/how-do-i-get-the-current-length-of-the-text-in-a-tkinter-text-widget
+        """
+        if self.message_entry.edit_modified():
+            message = self.message_entry.get('1.0', tk.END)
+            msg_length_in_bytes = len(message.encode('utf-8'))
+            if msg_length_in_bytes > self.max_message_length:
+                self.message_length_label['fg'] = 'red'
+                accepted_chars = len(message.encode('utf-8')[:self.max_message_length].decode('utf-8', 'ignore'))
+                self.message_entry.delete('1.0', tk.END)
+                self.message_entry.insert('1.0', message[:accepted_chars])
+            else:
+                self.message_length_label['fg'] = 'black'
+            self.message_length = len(self.message_entry.get('1.0', tk.END).encode('utf-8'))
+            self.message_length_label['text'] = f'Viestin pituus: {self.message_length}'
+            self.message_entry.edit_modified(False)

@@ -1,6 +1,5 @@
 from gui.gui import RsaApplication
 
-
 def main():
     """Main method.
     """
