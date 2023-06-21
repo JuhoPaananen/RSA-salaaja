@@ -35,6 +35,12 @@ Ei määritelty vielä
 
 [Wikipedia: Potenssiinkorotusalgoritmi](https://fi.wikipedia.org/wiki/Potenssiinkorotusalgoritmi)
 
+[Wikipedia: Miller-Rabin test](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test)
+
+[Wikipedia: Largerst known prime number](https://en.wikipedia.org/wiki/Largest_known_prime_number)
+
+[Handbook of applied cryptography: chapter 4](https://cacr.uwaterloo.ca/hac/about/chap4.pdf)
+
 ### Opinto-ohjelma ja käytettävät kielet
 Kurssi toteutetaan osana tietojenkäsittelytieteen kandidaatin (TKT) opintoja.
 
