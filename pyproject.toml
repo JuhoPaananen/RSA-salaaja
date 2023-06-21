@@ -9,6 +9,7 @@ packages = [{include = "rsa_salaaja"}]
 [tool.poetry.dependencies]
 python = "^3.8"
 invoke = "^2.1.2"
+rsa = "^4.9"
 
 
 [tool.poetry.group.dev.dependencies]
