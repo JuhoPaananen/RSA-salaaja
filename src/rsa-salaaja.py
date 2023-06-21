@@ -5,6 +5,7 @@ def main():
     """
     app = RsaApplication()
     app.start()
+    print("Thank you for using my RSA application!")
 
 if __name__ == "__main__":
     main()
