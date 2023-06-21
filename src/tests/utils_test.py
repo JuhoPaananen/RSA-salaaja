@@ -1,34 +1,50 @@
 import unittest
 import random
 import math
+import rsa
 from utils import _eratosthene_sieve, _miller_rabin_test, _euclidean_algorithm, generate_prime, find_e
 
 class TestPrimeNumberTools(unittest.TestCase):
     def setUp(self):
         self.filter_primes = _eratosthene_sieve(10000)
         self.non_primes = [i for i in range(3,10000, 2) if i not in self.filter_primes]
+        # Using RSA library to generate 2048 bit non-prime numbers as N in keys is a product of two primes p*q
+        self.non_prime_n = []
+        for _ in range(10):
+            self.non_prime_n.append(rsa.newkeys(2048)[0].n)
+        self.large_primes = [2**607-1, 2**521-1] # source: https://en.wikipedia.org/wiki/Largest_known_prime_number
 
     def test_eratosthene_sieve(self):
         self.assertEqual(_eratosthene_sieve(100), [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97])
 
-    def test_miller_rabin_for_known_primes(self):
+    def test_miller_rabin_for_known_small_primes(self):
         for prime in self.filter_primes[2:]:
             self.assertTrue(_miller_rabin_test(prime, 40))
 
-    def test_miller_rabin_for_non_primes(self):
+    def test_miller_rabin_for_small_non_primes(self):
         for non_prime in self.non_primes:
             self.assertFalse(_miller_rabin_test(non_prime, 40))
 
-    def test_generate_prime(self):
+    def test_miller_rabin_for_large_primes(self):
+        for prime in self.large_primes:
+            self.assertTrue(_miller_rabin_test(prime, 40))
+
+    def test_miller_rabin_for_product_of_large_primes(self):
+        candidate = self.large_primes[0] * self.large_primes[1]
+        self.assertFalse(_miller_rabin_test(candidate, 40))
+
+    def test_miller_rabin_2048_bit_non_prime(self):
+        for non_prime in self.non_prime_n:
+            self.assertFalse(_miller_rabin_test(non_prime, 40))
+
+    def test_generate_prime_generates_prime(self):
         self.assertTrue(generate_prime(13) in self.filter_primes)
 
     def test_euclidean_algorithm_finds_gcd(self):
-        self.assertEqual(_euclidean_algorithm(12, 5), 1)
-        self.assertEqual(_euclidean_algorithm(7, 12), 1)
-        self.assertEqual(_euclidean_algorithm(12, 8), 4)
-        self.assertEqual(_euclidean_algorithm(4, 12), 4)
-        self.assertEqual(_euclidean_algorithm(12, 9), 3)
-        self.assertEqual(_euclidean_algorithm(9, 12), 3)
+        for _ in range(10):
+            first_number = random.randint(1, 100000000)
+            second_number = random.randint(1, 100000000)
+            self.assertEqual(_euclidean_algorithm(first_number, second_number), math.gcd(first_number, second_number))
 
     def test_find_e_generates_correct_number(self):
         p = random.choice(self.filter_primes)
