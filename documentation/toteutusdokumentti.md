@@ -29,8 +29,14 @@ Purkaminen on käänteinen operaatio, jossa salattu viesti (suuri kokonaisluku) 
 Operaatioihin käytetään pow() funktiota. Purkamisen toiminta voidaan osoittaa [Fermant'n pienen lauseen](https://fi.wikipedia.org/wiki/Fermat%E2%80%99n_pieni_lause) avulla.
 
 ## Aikavaativuus
-**Täydentyy..**
+Lyhyen oppimäärän käsitys keskeisten algoritmien aikavaativuudesta. Salausavaimien generoiminen vaatii kaksi suurta alkulukua. Koska jokainen alkuluku testataan aikavaativuudeltaan vaativimmalla Miller-Rabinin testillä (O(k log(n))), määrittää Miller-Rabin algoritmi aikavaativuuden avainten generoimiselle. Avaimien luominen edellyttää kaksi alkulukua, joten aikavaativuus on luokkaa O(2k log(n)), jossa k=40 ja n = 1024 bittinen luku.
+
+Salaaminen ja purkaminen käyttävät pow()-funktiota, jonka aikavaativuus on käsittääkseni O(log(b)), jossa b on potenssi.
+
+Algoritmien aikavaativuudet:
 - Eratostheneen seula: O(n log(log(n))), jossa n = 1000, eli tämä on vakio
 - Miller-Rabin: O(k log(n)), missä k=40 ja n = 1024 bittinen luku.
-- Avaimen luominen: Eratosthene + Miller-Rabin x 2 + potenssiinkorotusalgoritmit. Näistä Miller-Rabin aikavaativuus korkein, eli jotain O(2k log(n)), koska kaksi alkulukua tulee löytää.
-- Salaaminen ja purkaminen: täytyy selvittää pow() aikavaativuus.
+- Avaimen luominen: O(2k log(n))
+- Salaaminen ja purkaminen: O(log(b)), jossa b = potenssi
+
+Käyttötesteissä avaimet on saatu luotua 0,5 - 1,3 sekunnissa. Salaamisen ja purkamisen aikaa ei ole kellotettu, mutta se on ainakin näennäisesti välitöntä.
