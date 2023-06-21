@@ -5,7 +5,11 @@ RSA-salaaja on nimensä mukaisesti yksinkertainen RSA-salausohjelma. Ohjelmalla 
 1. Kloonaa projekti valitsemaasi sijaintiin 
 ```bash
 git clone git@github.com:JuhoPaananen/RSA-salaaja.git
-``` 
+```
+Nyt voit suorittaa ohjelman suorittamalla RSA-salaaja kansion juuressa olevan rsa-salaaja paketin joko tuplaklikkaamalla sitä tai komentorivillä komennolla `./rsa-salaaja`.
+
+Vaihtoehtoisesti voit käynnistää ohjelman poetryn avulla, jolloin myös muut alla olevat komennot (kuten start, test, lint) ovat käytettävissäsi.
+ 
 2. Ennen ohjelman käynnistämistä, asenna riippuvuudet komennolla:
 ```bash
 poetry install
@@ -21,7 +25,7 @@ Koodin laatua voi arvioida suorittamalla kommmennon (käyttöliittymän koodi on
 poetry run invoke lint
 ```
 ### Koodin testaus
-Ohjelmakoodin valmiit testit voi ajaa suorittamalla komennon:
+Ohjelmakoodin valmiit testit voi ajaa suorittamalla komennon (huom. testit sisältävät yli 2000 bittisten lukujen testauksen, jonka seurauksena testien ajaminen voi viedä useamman minuutin):
 ```bash
 poetry run invoke test
 ```
