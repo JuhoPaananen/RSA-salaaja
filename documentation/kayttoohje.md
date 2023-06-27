@@ -6,7 +6,7 @@ RSA-salaaja on nimensä mukaisesti yksinkertainen RSA-salausohjelma. Ohjelmalla 
 ```bash
 git clone git@github.com:JuhoPaananen/RSA-salaaja.git
 ```
-Nyt voit suorittaa ohjelman suorittamalla RSA-salaaja kansion juuressa olevan rsa-salaaja paketin joko tuplaklikkaamalla sitä tai komentorivillä komennolla `./rsa-salaaja`.
+Nyt voit suorittaa ohjelman suorittamalla RSA-salaaja kansion juuressa olevan rsa-salaaja paketin joko tuplaklikkaamalla sitä tai komentorivillä komennolla `./rsa-salaaja`. **Huom. paketointi sisältää python 3.10 version toteutuksen, joka edellyttää järjestelmältä GLIBC 2.35 version**
 
 Vaihtoehtoisesti voit käynnistää ohjelman poetryn avulla, jolloin myös muut alla olevat komennot (kuten start, test, lint) ovat käytettävissäsi.
  
