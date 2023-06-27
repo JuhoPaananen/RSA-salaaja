@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Juho <JuhoPaananen@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "rsa_salaaja"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
